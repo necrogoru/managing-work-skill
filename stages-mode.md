@@ -38,8 +38,29 @@ one check:
     - [ ] C1 · Full suite, build and checks pass (`<commands>`)
     - [ ] C2 · Independent review against definitions.md
 
-Prefer fewer, meaningful tasks over many trivial ones. If the list keeps growing, the feature is too
-big: say so and propose splitting it.
+Prefer fewer, meaningful tasks over many trivial ones.
+
+### Large work
+
+When the list passes 8 tasks (not counting Closing), the work is too big for one conversation. Keep
+it as one piece of work in one `tasks.md`, planned to span several conversations:
+
+- Group the tasks into stages of 3 to 8. Each stage ends in something that works and is tested on
+  its own, and its tasks' `Needs` point only to the same or earlier stages.
+- Publish the progress page as an artifact if there is a tool for it (in Claude Code, the Artifact
+  tool) and write its URL under the title of `tasks.md` as `Tracking: <url>`.
+- Write one prompt per stage in `.work/<slug>/prompts.md`, filled in from this template, and show
+  them with the proposal:
+
+      Use the managing-work skill to continue "<feature>" in <absolute repo path>.
+      Work only on stage "<stage>" of .work/<slug>/tasks.md (<task ids>), following step 3 of
+      stages-mode. When its boxes are all [x], run the project's suite and build; if they fail,
+      add a task to this stage to fix it. Then report, end with the next stage's prompt from
+      .work/<slug>/prompts.md, and stop: the next stage runs in a new conversation.
+
+  The last stage's prompt adds: "Then run step 4, Close with tests, and the Self-review."
+- Once the user approves, this conversation stops. Each stage, starting with the first, runs in a
+  new conversation from its prompt.
 
 ## 3. Execute
 

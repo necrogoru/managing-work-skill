@@ -46,7 +46,9 @@ After every checkbox change, regenerate the page:
     node <this skill's folder>/scripts/progress.mjs .work/<slug>
 
 It writes `.work/<slug>/progress.html` and prints `done/total (pct%)`. The page reloads itself, so
-the first time give the user `open .work/<slug>/progress.html` and leave it open.
+the first time give the user `open .work/<slug>/progress.html` and leave it open. If `tasks.md` has
+a `Tracking: <url>` line, also republish `progress.html` to that artifact after each box marked
+`[x]`.
 
 It counts top-level checkboxes: `- [ ]` to do, `- [~]` in progress, `- [x]` done, grouped by `##`
 heading. Indented lines under a box are its details.
