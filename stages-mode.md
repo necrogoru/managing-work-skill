@@ -11,7 +11,8 @@ conclusions: they go into `definitions.md` → Context.
 ## 2. Propose
 
 Write the two files below, regenerate the progress page, show both to the user and wait for their
-approval before executing.
+approval before executing. Before showing them, cut: for each Decision the simpler option wins
+unless a requirement rules it out, and anything nobody asked for goes to Scope → out.
 
 `definitions.md` holds everything a task's agent needs and nothing else:
 
@@ -99,8 +100,8 @@ You orchestrate and fresh subagents implement. Only you edit `.work/`.
 ## 4. Close with tests
 
 - C1: run the whole suite, the build and the project's checks yourself.
-- C2: give a fresh subagent only `definitions.md` and the diff. It checks every Acceptance criterion
-  and the Bar, and reports gaps as file:line.
+- C2: give a fresh subagent only `definitions.md`, the diff and the Bar text from step 3. It checks
+  every Acceptance criterion and the Bar, and reports gaps as file:line.
 - Each gap becomes a new task in `tasks.md` (so the percentage drops honestly) and goes back through
   step 3.
 - When every box is `[x]`, run the Self-review in `SKILL.md`, then tell the user what was built

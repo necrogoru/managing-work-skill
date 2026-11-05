@@ -21,6 +21,7 @@ in their language.
 
 ## Start
 
+0. If the work fits in a few edits with one obvious check, skip this skill and just do it.
 1. If `.work/` already has a folder for this work, read it and resume: `tasks.md` → stages mode,
    the first unchecked task; `goal.md` → goal mode, the last Log entry. Don't ask the mode again.
 2. Otherwise, before anything else, find which mode fits the request. Run
