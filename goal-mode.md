@@ -26,7 +26,7 @@ Each iteration:
 
 1. Check every criterion and note which ones fail.
 2. Pick the smallest step that moves a failing criterion. Do it yourself, or hand it to a fresh
-   subagent with the prompt from `tasks-mode.md`: `goal.md` replaces `definitions.md` and the step
+   subagent with the prompt from `stages-mode.md`: `goal.md` replaces `definitions.md` and the step
    replaces the task.
 3. Every code change comes with its test.
 4. Check again. Mark `[x]` only on evidence, and unmark any criterion that regressed.
@@ -40,4 +40,4 @@ report to the user with the Log.
 ## 3. Close
 
 Check every criterion again in one pass, since an early one can regress. Run the project's whole
-suite and report.
+suite, run the Self-review in `SKILL.md`, then report.

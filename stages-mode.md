@@ -1,4 +1,4 @@
-# Task list mode
+# Stages mode
 
 Four steps, in order. Each one finishes before the next starts.
 
@@ -28,7 +28,7 @@ approval before executing.
 one check:
 
     # <Feature>
-    ## <Phase>
+    ## <Stage>
     - [ ] T1 · <imperative title>
       - Does: <the change, in a sentence or two>
       - Files: <paths>
@@ -82,4 +82,5 @@ You orchestrate and fresh subagents implement. Only you edit `.work/`.
   and the Bar, and reports gaps as file:line.
 - Each gap becomes a new task in `tasks.md` (so the percentage drops honestly) and goes back through
   step 3.
-- You're done when every box is `[x]`. Tell the user what was built and how it was verified.
+- When every box is `[x]`, run the Self-review in `SKILL.md`, then tell the user what was built
+  and how it was verified.

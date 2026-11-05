@@ -84,7 +84,7 @@
   const noun = goal ? 'criteria met' : 'tasks done'
   document.title = `${data.pct}% · ${data.title}`
   document.getElementById('app').innerHTML = `
-    <div class="kind">${goal ? 'Goal' : 'Task list'}</div>
+    <div class="kind">${goal ? 'Goal' : 'Stages'}</div>
     <h1>${inline(data.title)}</h1>
     <div class="pct">${data.pct}%</div>
     <p class="summary">${data.done} of ${data.total} ${noun}${data.doing ? ` · ${data.doing} in progress` : ''}</p>
