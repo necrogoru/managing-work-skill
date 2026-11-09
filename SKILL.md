@@ -17,7 +17,8 @@ in their language.
 - **Solid.** Small focused files, code that reads like its surroundings, comments only for a
   non-obvious why. No slop, no dead code.
 - **The files are the truth.** Decisions are written down before code exists, and a box is checked
-  only on evidence.
+  only on evidence. Only the session running the work edits `.work/`; side questions and forks
+  only read it.
 
 ## Start
 

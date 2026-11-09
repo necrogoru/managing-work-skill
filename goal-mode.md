@@ -18,7 +18,8 @@ Write `goal.md` with the user, regenerate the progress page and wait for their a
     ## Log
 
 Each criterion must be checkable by a command, or by an observation anyone would read the same way.
-"Faster" isn't one; "p95 under 200 ms in `<bench>`" is. Keep only the criteria the user asked for;
+"Faster" isn't one; "p95 under 200 ms in `<bench>`" is. The check must run the behaviour (a
+test that executes it, a real run); a test that only reads source text doesn't count. Keep only the criteria the user asked for;
 anything else goes to Out of scope.
 
 ## 2. Iterate

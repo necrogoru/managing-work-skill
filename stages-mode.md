@@ -12,7 +12,10 @@ conclusions: they go into `definitions.md` → Context.
 
 Write the two files below, regenerate the progress page, show both to the user and wait for their
 approval before executing. Before showing them, cut: for each Decision the simpler option wins
-unless a requirement rules it out, and anything nobody asked for goes to Scope → out.
+unless a requirement rules it out, and anything nobody asked for goes to Scope → out. When a spec
+exists, check each Decision against its text. Before a Decision relies on existing code, trace the
+main path through that code once and note what you ran or read; state each Decision as the outcome
+it must achieve, not an existing example to copy.
 
 `definitions.md` holds everything a task's agent needs and nothing else:
 
@@ -68,6 +71,7 @@ it as one piece of work in one `tasks.md`, planned to span several conversations
 You orchestrate and fresh subagents implement. Only you edit `.work/`.
 
 - Anything a task needs that lives only in the conversation goes into `definitions.md` first.
+- When the base branch moves during the work, re-check Context before the next task.
 - Take the tasks whose `Needs` are done. Run them in parallel only if they share no files and their
   tests can't see each other's half-done work; otherwise run them one at a time.
 - Mark each one `[~]` and regenerate the page when you dispatch it.
@@ -96,6 +100,8 @@ You orchestrate and fresh subagents implement. Only you edit `.work/`.
   it's blocked or the definitions were wrong, settle it with the user, fix `definitions.md`, then
   retry.
 - Commits follow the project's rules and the user's say-so.
+- If the user names another execution skill, use its implementer and reviewer loop, but `tasks.md`
+  stays the only ledger and you commit as the orchestrator.
 
 ## 4. Close with tests
 
