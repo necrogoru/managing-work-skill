@@ -5,25 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Progress</title>
 <style>
+  /* Palette: lavender-to-violet backdrop, ink-black panels, cream type, chartreuse accent. */
   :root {
-    --bg: #eaf3f8; --glow: #d3e8f5; --surface: #ffffff; --hover: #f2f8fc; --text: #0b1d28; --muted: #4a6272;
-    --line: #dbe7ee; --track: #d6e5ee; --done: #1672c4; --doing: #d2402a; --focus: #1672c4;
+    color-scheme: light;
+    --bg: #f1edff; --glow: #cfc2ff; --glow-2: #e4dcff; --surface: #ffffff; --hover: #f6f3ff; --text: #15131b; --muted: #5c5573;
+    --line: #e4ddf8; --track: #e3dbfa; --done: #5b3cf0; --doing: #6aa204; --focus: #5b3cf0; --neon: 40%;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #0a1b25; --glow: #123548; --surface: #11293a; --hover: #163447; --text: #eef5f9; --muted: #93abba;
-      --line: #1d3a4b; --track: #1b3a4c; --done: #3ea6f5; --doing: #f2603f; --focus: #3ea6f5;
+      color-scheme: dark;
+      --bg: #0d0c11; --glow: #2c1f78; --glow-2: #171230; --surface: #16151b; --hover: #1e1c26; --text: #fdf6d8; --muted: #a49dba;
+      --line: #27242f; --track: #26222f; --done: #7d5cff; --doing: #c8f560; --focus: #c8f560; --neon: 75%;
     }
   }
   /* Hosts such as claude.ai artifacts force a theme through data-theme. */
   :root[data-theme="dark"] {
-    --bg: #0a1b25; --glow: #123548; --surface: #11293a; --hover: #163447; --text: #eef5f9; --muted: #93abba;
-    --line: #1d3a4b; --track: #1b3a4c; --done: #3ea6f5; --doing: #f2603f; --focus: #3ea6f5;
+    color-scheme: dark;
+    --bg: #0d0c11; --glow: #2c1f78; --glow-2: #171230; --surface: #16151b; --hover: #1e1c26; --text: #fdf6d8; --muted: #a49dba;
+    --line: #27242f; --track: #26222f; --done: #7d5cff; --doing: #c8f560; --focus: #c8f560; --neon: 75%;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0; min-height: 100vh; color: var(--text);
-    background: radial-gradient(60rem 32rem at 70% -10%, var(--glow), transparent 70%) no-repeat, var(--bg);
+    background:
+      radial-gradient(60rem 32rem at 80% -10%, var(--glow), transparent 70%) no-repeat,
+      radial-gradient(40rem 28rem at 0% 0%, var(--glow-2), transparent 70%) no-repeat,
+      var(--bg);
     font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   main { max-width: 760px; margin: 0 auto; padding: 48px 20px 72px; }
@@ -31,10 +38,53 @@
   h1 { margin: 6px 0 32px; font-size: 26px; line-height: 1.25; }
   .pct { font-size: 56px; font-weight: 650; line-height: 1; font-variant-numeric: tabular-nums; }
   .summary { margin: 12px 0 18px; color: var(--muted); }
-  .bar { display: flex; height: 10px; overflow: hidden; border-radius: 99px; background: var(--track); }
-  .bar.thin { height: 4px; }
-  .bar .done { background: var(--done); }
-  .bar .doing { background: var(--doing); }
+  /* Neon tube: a hot, near-white core and a soft halo, over a thin unlit track. */
+  .bar { position: relative; display: flex; align-items: center; height: 6px; }
+  .bar::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 2px; transform: translateY(-50%);
+    border-radius: 99px; background: var(--track);
+  }
+  /* Plasma: two bands of light slide through the tube at different speeds and interfere,
+     so the shimmer never quite repeats, while the halo hums. In-progress runs hotter.
+     --phase (set from the clock in the script) keeps the motion continuous across reloads. */
+  .bar span {
+    --c: var(--done); --hot: color-mix(in srgb, var(--c), #fff 65%);
+    position: relative; height: 100%; overflow: hidden;
+    background: linear-gradient(var(--c), var(--hot) 50%, var(--c));
+    box-shadow: 0 0 3px var(--c), 0 0 12px color-mix(in srgb, var(--c) var(--neon), transparent),
+      0 0 28px color-mix(in srgb, var(--c) calc(var(--neon) / 2), transparent);
+    animation: hum 2.6s ease-in-out var(--phase, 0s) infinite;
+  }
+  .bar span::before, .bar span::after {
+    content: ""; position: absolute; inset: 0; mix-blend-mode: screen;
+    background: repeating-linear-gradient(90deg, transparent 0 20px, var(--hot) 32px, transparent 44px 80px);
+    animation: drift 1.3s linear var(--phase, 0s) infinite;
+  }
+  .bar span::after {
+    background: repeating-linear-gradient(90deg, transparent 0 34px,
+      color-mix(in srgb, var(--hot) 70%, transparent) 46px, transparent 58px 130px);
+    animation-duration: 2.9s; animation-direction: reverse;
+  }
+  .bar .doing { --c: var(--doing); animation-duration: 1.4s; }
+  .bar .doing::before { animation-duration: .8s; }
+  .bar span:first-child { border-radius: 99px 0 0 99px; }
+  .bar span:last-child { border-top-right-radius: 99px; border-bottom-right-radius: 99px; }
+  .bar.thin { height: 3px; }
+  .bar.thin::before { height: 1px; }
+  .bar.thin span {
+    box-shadow: 0 0 2px var(--c), 0 0 8px color-mix(in srgb, var(--c) var(--neon), transparent);
+    animation-name: hum-thin;
+  }
+  @keyframes drift { to { background-position: 260px 0; } }
+  @keyframes hum {
+    50% {
+      box-shadow: 0 0 4px var(--c), 0 0 18px color-mix(in srgb, var(--c) var(--neon), transparent),
+        0 0 40px color-mix(in srgb, var(--c) calc(var(--neon) / 2), transparent);
+    }
+  }
+  @keyframes hum-thin {
+    50% { box-shadow: 0 0 3px var(--c), 0 0 12px color-mix(in srgb, var(--c) var(--neon), transparent); }
+  }
   section { margin-top: 44px; }
   .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 10px; }
   h2 { margin: 0; font-size: 16px; }
@@ -60,7 +110,10 @@
   .details p { margin: 4px 0; }
   code { padding: 1px 4px; border-radius: 4px; background: var(--track); font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; }
   footer { margin-top: 48px; color: var(--muted); font-size: 13px; }
-  @media (prefers-reduced-motion: reduce) { summary, summary::after { transition: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    summary, summary::after { transition: none; }
+    .bar span, .bar span::before, .bar span::after { animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -74,15 +127,20 @@
     set(key, value) { try { sessionStorage.setItem(key, JSON.stringify(value)) } catch {} },
   }
   const open = new Set(store.get('open', []))
+  // Start every animation at a phase taken from the clock, so the page's 10 s reload doesn't visibly restart the plasma.
+  document.documentElement.style.setProperty('--phase', `-${(Date.now() % 1e6) / 1000}s`)
 
   const escape = (text) => text.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c])
   const inline = (text) => escape(text)
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
   const share = (part, total) => (total ? (part / total) * 100 : 0)
+  // Only lit segments are rendered, so the first and last spans get the rounded tube ends.
   const bar = (t, extra = '') =>
-    `<div class="bar ${extra}"><span class="done" style="width:${share(t.done, t.total)}%"></span>` +
-    `<span class="doing" style="width:${share(t.doing, t.total)}%"></span></div>`
+    `<div class="bar ${extra}">` +
+    ['done', 'doing'].filter((state) => t[state])
+      .map((state) => `<span class="${state}" style="width:${share(t[state], t.total)}%"></span>`).join('') +
+    `</div>`
 
   function item(entry, key) {
     const head = `<span class="dot"></span><span class="id">${escape(entry.id)}</span><span class="title">${inline(entry.title)}</span>`
