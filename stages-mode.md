@@ -6,7 +6,8 @@ Four steps, in order. Each one finishes before the next starts.
 
 Ask the user whether anything needs exploring first (existing code, options, external docs) and
 what. If so, explore with read-only subagents in parallel, one per question, and keep only their
-conclusions: they go into `definitions.md` → Context.
+conclusions: they go into `definitions.md` → Context. Report each finding to the user as what
+breaks, for whom and how badly first; commits and paths come after.
 
 ## 2. Propose
 
@@ -15,7 +16,9 @@ approval before executing. Before showing them, cut: for each Decision the simpl
 unless a requirement rules it out, and anything nobody asked for goes to Scope → out. When a spec
 exists, check each Decision against its text. Before a Decision relies on existing code, trace the
 main path through that code once and note what you ran or read; state each Decision as the outcome
-it must achieve, not an existing example to copy.
+it must achieve, not an existing example to copy. If untrusted input (people, other tenants, model
+output) reaches a prompt, query, path or client that acts on it, list each such boundary in Context
+and give it one hostile case in Acceptance.
 
 `definitions.md` holds everything a task's agent needs and nothing else:
 
@@ -35,7 +38,7 @@ one check:
     ## <Stage>
     - [ ] T1 · <imperative title>
       - Does: <the change, in a sentence or two>
-      - Files: <paths>
+      - Files: <paths, including shared test helpers the Test touches>
       - Needs: <task ids, or none>
       - Test: `<command>` (what it proves)
     ## Closing
@@ -96,7 +99,8 @@ You orchestrate and fresh subagents implement. Only you edit `.work/`.
       lines, and any doubt about the definitions.
 
 - When it reports back, read the diff and run the task's test yourself, because a reported "done"
-  can be wrong. If it passes, mark `[x]`, add one `- Done:` detail line and regenerate the page. If
+  can be wrong; a test against a live model or other nondeterministic service must pass three runs
+  in a row. If it passes, mark `[x]`, add one `- Done:` detail line and regenerate the page. If
   it's blocked or the definitions were wrong, settle it with the user, fix `definitions.md`, then
   retry.
 - Commits follow the project's rules and the user's say-so.
@@ -111,4 +115,5 @@ You orchestrate and fresh subagents implement. Only you edit `.work/`.
 - Each gap becomes a new task in `tasks.md` (so the percentage drops honestly) and goes back through
   step 3.
 - When every box is `[x]`, run the Self-review in `SKILL.md`, then tell the user what was built
-  and how it was verified.
+  and how it was verified, ending with any steps left to them (merge, deploy, publish) as a
+  numbered list.
