@@ -28,11 +28,14 @@ instead of from the conversation, so any session can pick the work up where the 
 
 ## Install
 
-Place this folder in your agent's skills directory, for example `~/.claude/skills/managing-work`.
-The cross-runtime location `~/.agents/skills/managing-work` works for runtimes that support it; a
-symlink covers both:
+Install this folder once in the cross-runtime location, `~/.agents/skills/managing-work`, and let
+Claude Code point at it. Runtimes that read `.agents/skills` pick it up directly; a symlink gives
+Claude Code the same single copy to update:
 
 ```bash
+mkdir -p ~/.agents/skills
+git clone https://github.com/necrogoru/managing-work-skill.git ~/.agents/skills/managing-work
+
 mkdir -p ~/.claude/skills
 ln -s ~/.agents/skills/managing-work ~/.claude/skills/managing-work
 ```
