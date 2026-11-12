@@ -14,11 +14,15 @@ breaks, for whom and how badly first; commits and paths come after.
 Write the two files below, regenerate the progress page, show both to the user and wait for their
 approval before executing. Before showing them, cut: for each Decision the simpler option wins
 unless a requirement rules it out, and anything nobody asked for goes to Scope → out. When a spec
-exists, check each Decision against its text. Before a Decision relies on existing code, trace the
+exists, check each Decision against its text. Re-read the Project rules and check that every planned
+task can satisfy them; if a rule is absolute, say how the change meets it or who is exempt. Before a
+Decision relies on existing code, trace the
 main path through that code once and note what you ran or read; state each Decision as the outcome
 it must achieve, not an existing example to copy. If untrusted input (people, other tenants, model
 output) reaches a prompt, query, path or client that acts on it, list each such boundary in Context
 and give it one hostile case in Acceptance.
+For a reusable piece (component, library, API), Acceptance names its main real host contexts (e.g.
+inside a modal, a scrolling panel), not only its showcase page.
 
 `definitions.md` holds everything a task's agent needs and nothing else:
 
@@ -38,9 +42,10 @@ one check:
     ## <Stage>
     - [ ] T1 · <imperative title>
       - Does: <the change, in a sentence or two>
-      - Files: <paths, including shared test helpers the Test touches>
+      - Files: <paths, including shared test helpers the Test touches and existing tests that assert
+        the code it changes (grep them)>
       - Needs: <task ids, or none>
-      - Test: `<command>` (what it proves)
+      - Test: `<command>` (what it proves; add the project's guards that scan the files it adds)
     ## Closing
     - [ ] C1 · Full suite, build and checks pass (`<commands>`)
     - [ ] C2 · Independent review against definitions.md
@@ -75,6 +80,8 @@ You orchestrate and fresh subagents implement. Only you edit `.work/`.
 
 - Anything a task needs that lives only in the conversation goes into `definitions.md` first.
 - When the base branch moves during the work, re-check Context before the next task.
+- When the work spans several worktrees or repos, give every command its directory explicitly
+  (absolute paths, `git -C`); never rely on the shell's current directory.
 - Take the tasks whose `Needs` are done. Run them in parallel only if they share no files and their
   tests can't see each other's half-done work; otherwise run them one at a time.
 - Mark each one `[~]` and regenerate the page when you dispatch it.
