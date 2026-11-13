@@ -18,7 +18,7 @@ in their language.
   non-obvious why. No slop, no dead code.
 - **The files are the truth.** Decisions are written down before code exists, and a box is checked
   only on evidence. Only the session running the work edits `.work/`; side questions and forks
-  only read it.
+  only read it. Before handing the user a file, path or command, check that it exists and runs.
 
 ## Start
 

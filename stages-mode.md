@@ -7,20 +7,26 @@ Four steps, in order. Each one finishes before the next starts.
 Ask the user whether anything needs exploring first (existing code, options, external docs) and
 what. If so, explore with read-only subagents in parallel, one per question, and keep only their
 conclusions: they go into `definitions.md` → Context. Report each finding to the user as what
-breaks, for whom and how badly first; commits and paths come after.
+breaks, for whom and how badly first; commits and paths come after. List the request's factual
+claims (current values, existing behavior) and verify each against the code.
 
 ## 2. Propose
 
 Write the two files below, regenerate the progress page, show both to the user and wait for their
 approval before executing. Before showing them, cut: for each Decision the simpler option wins
-unless a requirement rules it out, and anything nobody asked for goes to Scope → out. When a spec
+unless a requirement rules it out, and anything nobody asked for goes to Scope → out. Map every
+item the user named to a Decision; a pointer to an existing one-liner is not coverage. When a spec
 exists, check each Decision against its text. Re-read the Project rules and check that every planned
-task can satisfy them; if a rule is absolute, say how the change meets it or who is exempt. Before a
+task can satisfy them; if a rule is absolute, say how the change meets it or who is exempt; when a
+rule points to a guide, read that guide before writing the Decisions it governs. Before a
 Decision relies on existing code, trace the
 main path through that code once and note what you ran or read; state each Decision as the outcome
 it must achieve, not an existing example to copy. If untrusted input (people, other tenants, model
 output) reaches a prompt, query, path or client that acts on it, list each such boundary in Context
 and give it one hostile case in Acceptance.
+Run each task's Test command once against today's code before writing it down, so a check that can
+never pass (or never fail) is caught now. A task that changes what users see ends its Test with a
+quick render of that state, so a visual Decision is proven where it is built, not only at Closing.
 For a reusable piece (component, library, API), Acceptance names its main real host contexts (e.g.
 inside a modal, a scrolling panel), not only its showcase page.
 
@@ -109,7 +115,9 @@ You orchestrate and fresh subagents implement. Only you edit `.work/`.
   can be wrong; a test against a live model or other nondeterministic service must pass three runs
   in a row. If it passes, mark `[x]`, add one `- Done:` detail line and regenerate the page. If
   it's blocked or the definitions were wrong, settle it with the user, fix `definitions.md`, then
-  retry.
+  retry. A fix from a test or review only clarifies a Decision; one that adds a rule, number or
+  option goes to the user first. Before sending a fix back or offering the user options, check each
+  premise against the code or data and drop the ones that don't hold.
 - Commits follow the project's rules and the user's say-so.
 - If the user names another execution skill, use its implementer and reviewer loop, but `tasks.md`
   stays the only ledger and you commit as the orchestrator.
