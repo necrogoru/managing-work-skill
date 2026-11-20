@@ -5,13 +5,16 @@ criteria hold.
 
 ## 1. Define
 
-Write `goal.md` with the user, regenerate the progress page and wait for their approval:
+If anything needs exploring first, do it as in step 1 of `stages-mode.md`. Then write `goal.md` with
+the user, regenerate the progress page and wait for their approval:
 
     # <Goal>
     ## Goal
     <the outcome, in one or two sentences>
     ## Success criteria
     - [ ] K1 · <criterion> (check: `<command>` or <exact observation>)
+    ## Approach   (if subagents do the steps) the first path, and the ideas cut with why
+    ## Context    (same) exploration conclusions; code to reuse, with paths
     ## Limits
     - Out of scope: <...>
     - Stop and ask after <N> iterations without progress, or if <condition>.

@@ -16,19 +16,28 @@ Write the two files below, regenerate the progress page, show both to the user a
 approval before executing. Before showing them, cut: for each Decision the simpler option wins
 unless a requirement rules it out, and anything nobody asked for goes to Scope → out. Map every
 item the user named to a Decision; a pointer to an existing one-liner is not coverage. When a spec
-exists, check each Decision against its text. Re-read the Project rules and check that every planned
+exists, check each Decision against its text; when a Decision or Contract paraphrases a reference
+(prototype code, a design image, quoted copy, a helper's signature), check it against that source. Re-read the Project rules and check that every planned
 task can satisfy them; if a rule is absolute, say how the change meets it or who is exempt; when a
 rule points to a guide, read that guide before writing the Decisions it governs. Before a
 Decision relies on existing code, trace the
 main path through that code once and note what you ran or read; state each Decision as the outcome
-it must achieve, not an existing example to copy. If untrusted input (people, other tenants, model
+it must achieve, not an existing example to copy. A Decision that fires by itself or only once says
+what happens when its conditions arrive in another order or its result already holds. If untrusted input (people, other tenants, model
 output) reaches a prompt, query, path or client that acts on it, list each such boundary in Context
-and give it one hostile case in Acceptance.
+and give it one hostile case in Acceptance: the cheapest way around the rule's guard, not only the
+plain attack. A task's Files come from tracing each Decision it carries to where its data is
+written, validated and rendered, including the screen's error and empty branches, not from the
+task's title; when a Decision changes a shared helper
+or component, grep every caller into Context and into some task's Files. Check every path written
+into `definitions.md` or `tasks.md` with `ls` before writing it.
 Run each task's Test command once against today's code before writing it down, so a check that can
 never pass (or never fail) is caught now. A task that changes what users see ends its Test with a
 quick render of that state, so a visual Decision is proven where it is built, not only at Closing.
 For a reusable piece (component, library, API), Acceptance names its main real host contexts (e.g.
-inside a modal, a scrolling panel), not only its showcase page.
+inside a modal, a scrolling panel), not only its showcase page. Acceptance names the environment the
+result must work in (local, staging, production) and who must reach it there; ask if the request does
+not say.
 
 `definitions.md` holds everything a task's agent needs and nothing else:
 
@@ -49,7 +58,7 @@ one check:
     - [ ] T1 · <imperative title>
       - Does: <the change, in a sentence or two>
       - Files: <paths, including shared test helpers the Test touches and existing tests that assert
-        the code it changes (grep them)>
+        the code it changes (grep them for what it adds and for every id, attribute or string it removes)>
       - Needs: <task ids, or none>
       - Test: `<command>` (what it proves; add the project's guards that scan the files it adds)
     ## Closing
@@ -89,7 +98,9 @@ You orchestrate and fresh subagents implement. Only you edit `.work/`.
 - When the work spans several worktrees or repos, give every command its directory explicitly
   (absolute paths, `git -C`); never rely on the shell's current directory.
 - Take the tasks whose `Needs` are done. Run them in parallel only if they share no files and their
-  tests can't see each other's half-done work; otherwise run them one at a time.
+  tests can't see each other's half-done work; otherwise run them one at a time. Keep only a few
+  heavy commands (builds, type checks, dev servers) running at once, and have each implementer stop
+  any server it started before replying.
 - Mark each one `[~]` and regenerate the page when you dispatch it.
 - Use a subagent that starts empty (in Claude Code, `general-purpose`, never a fork). Its prompt is
   exactly this:
@@ -113,9 +124,10 @@ You orchestrate and fresh subagents implement. Only you edit `.work/`.
 
 - When it reports back, read the diff and run the task's test yourself, because a reported "done"
   can be wrong; a test against a live model or other nondeterministic service must pass three runs
-  in a row. If it passes, mark `[x]`, add one `- Done:` detail line and regenerate the page. If
-  it's blocked or the definitions were wrong, settle it with the user, fix `definitions.md`, then
-  retry. A fix from a test or review only clarifies a Decision; one that adds a rule, number or
+  in a row. If it passes, mark `[x]`, add one `- Done:` detail line, regenerate the page and, if
+  `tasks.md` has a `Tracking:` line, republish it. If it's blocked or the definitions were wrong,
+  check every remaining task for the same cause, settle it with the user for all of them at once,
+  fix `definitions.md`, then retry. A fix from a test or review only clarifies a Decision; one that adds a rule, number or
   option goes to the user first. Before sending a fix back or offering the user options, check each
   premise against the code or data and drop the ones that don't hold.
 - Commits follow the project's rules and the user's say-so.
