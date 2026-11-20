@@ -2,6 +2,8 @@
 
 # Managing Work skill `@managing-work`
 
+<img src="assets/workmark-cut.svg" alt="managing-work logo" width="96" height="96">
+
 An agent skill for running a feature, a multi-step task, or an open-ended goal from files on disk
 instead of from the conversation, so any session can pick the work up where the last one stopped.
 

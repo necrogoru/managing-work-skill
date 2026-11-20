@@ -53,6 +53,8 @@ if (!mode) fail(`No tasks.md or goal.md in ${dir}`)
 
 const data = { mode, updated: new Date().toISOString(), ...parse(readFileSync(join(dir, `${mode}.md`), 'utf8')) }
 const template = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'template.html'), 'utf8')
+const favicon = readFileSync(new URL('../assets/workmark-cut.svg', import.meta.url)).toString('base64')
 const json = JSON.stringify(data).replace(/</g, '\\u003c')
-writeFileSync(join(dir, 'progress.html'), template.replace('__DATA__', () => json))
+const html = template.replace('__FAVICON__', favicon).replace('__DATA__', () => json)
+writeFileSync(join(dir, 'progress.html'), html)
 console.log(`${data.title}: ${data.done}/${data.total} (${data.pct}%)`)
