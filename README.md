@@ -1,12 +1,4 @@
-<img width="150" height="150" alt="workmark-cut" src="https://github.com/user-attachments/assets/bad75251-66bc-482c-a70c-cde9e6388766" />![Uploadi<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">Workmark Cut</title>
-  <path fill="#16151b" d="M2 12h16l6 20 5-12h11l3 12 5-20h14L51 53H36l-4-11-3 11H15z"/>
-  <path fill="#7d5cff" d="M5 14h11l8 25 7-17 5 12-8 17H17z"/>
-  <path fill="#c8f560" d="M31 22h7l5 17 7-25h9L49 51H38l-8-19z"/>
-  <path fill="#ff974f" d="M50 14h9l-3 10h-9z"/>
-</svg>
-    
-ng workmark-cut.svg…]()
+<img width="150" height="150" alt="workmark-cut" src="https://github.com/user-attachments/assets/bad75251-66bc-482c-a70c-cde9e6388766" />
 
 # managing-work
 
