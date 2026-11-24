@@ -1,6 +1,6 @@
 <img width="150" height="150" alt="workmark-cut" src="https://github.com/user-attachments/assets/bad75251-66bc-482c-a70c-cde9e6388766" />
 
-# managing-work
+# Managing Work skill `@managing-work`
 
 An agent skill for running a feature, a multi-step task, or an open-ended goal from files on disk
 instead of from the conversation, so any session can pick the work up where the last one stopped.
