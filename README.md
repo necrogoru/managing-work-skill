@@ -59,6 +59,7 @@ progress.
 | Script | Purpose |
 | --- | --- |
 | `node scripts/recommend-mode.mjs "<request>"` | Prints the suggested mode and confidence, e.g. `goal 0.94`. |
+| `node scripts/recommend-mode.mjs --review "<edit>" ...` | Filters candidate self-review edits with Jev (`keep` or `drop`). |
 | `node scripts/progress.mjs .work/<slug>` | Rebuilds `progress.html` and prints `done/total (pct%)`. |
 
 ## Files

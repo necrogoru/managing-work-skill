@@ -69,7 +69,13 @@ After the mode's close step, before the final report, review this skill against 
 1. For each line, decide whether a different instruction in this skill would have prevented it in
    any project. Problems specific to this project don't count.
 2. If none would, end the report with one line: "Self-review: no changes to the skill."
-3. Otherwise propose up to three edits, each as: file of this skill, the change in one or two lines,
-   the friction it prevents. Ask the user (with the question tool if there is one) which to apply:
-   all, some, or none.
-4. Apply only what the user accepts, in English, keeping the skill as short as it was.
+3. Otherwise draft up to three candidate edits, each as: file of this skill, the change in one or
+   two lines, the friction it prevents. Filter them with Jev first by running
+   `node <this skill's folder>/scripts/recommend-mode.mjs --review "<edit 1>" "<edit 2>" ...`:
+   it scores each edit against what this skill aims for (stages or goal, simple, fast, effective,
+   no over-engineering) and prints `keep` or `drop`. Keep only `keep` edits (if the script fails,
+   judge them yourself against that same bar).
+4. If none survive, end the report with one line: "Self-review: no changes to the skill."
+5. Otherwise propose the surviving edits to the user and ask (with the question tool if there is
+   one) which to apply: all, some, or none.
+6. Apply only what the user accepts, in English, keeping the skill as short as it was.
