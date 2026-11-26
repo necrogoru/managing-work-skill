@@ -8,7 +8,8 @@ Ask the user whether anything needs exploring first (existing code, options, ext
 what. If so, explore with read-only subagents in parallel, one per question, and keep only their
 conclusions: they go into `definitions.md` → Context. Report each finding to the user as what
 breaks, for whom and how badly first; commits and paths come after. List the request's factual
-claims (current values, existing behavior) and verify each against the code.
+claims (current values, existing behavior) and verify each against the code; before drawing
+options or deciding how a state looks, trace how today's code renders that state.
 
 ## 2. Propose
 
@@ -21,7 +22,8 @@ exists, check each Decision against its text; when a Decision or Contract paraph
 task can satisfy them; if a rule is absolute, say how the change meets it or who is exempt; when a
 rule points to a guide, read that guide before writing the Decisions it governs. Before a
 Decision relies on existing code, trace the
-main path through that code once and note what you ran or read; state each Decision as the outcome
+main path through that code once and note what you ran or read; a Decision that rests on a size,
+duration or other measurable value measures it first (running it, not reading it); state each Decision as the outcome
 it must achieve, not an existing example to copy. A Decision that fires by itself or only once says
 what happens when its conditions arrive in another order or its result already holds. If untrusted input (people, other tenants, model
 output) reaches a prompt, query, path or client that acts on it, list each such boundary in Context
@@ -29,11 +31,13 @@ and give it one hostile case in Acceptance: the cheapest way around the rule's g
 plain attack. A task's Files come from tracing each Decision it carries to where its data is
 written, validated and rendered, including the screen's error and empty branches, not from the
 task's title; when a Decision changes a shared helper
-or component, grep every caller into Context and into some task's Files. Check every path written
+or component, grep every caller, and every place that overrides the values it reads (tokens,
+config, context), into Context and into some task's Files. Check every path written
 into `definitions.md` or `tasks.md` with `ls` before writing it.
 Run each task's Test command once against today's code before writing it down, so a check that can
-never pass (or never fail) is caught now. A task that changes what users see ends its Test with a
-quick render of that state, so a visual Decision is proven where it is built, not only at Closing.
+never pass (or never fail) is caught now. A design task starts from a screenshot of today's screen
+and greps its premises (callers, users), never comments. A task that changes what users see ends its
+Test with a quick render of that state, so a visual Decision is proven where it is built, not only at Closing.
 For a reusable piece (component, library, API), Acceptance names its main real host contexts (e.g.
 inside a modal, a scrolling panel), not only its showcase page. Acceptance names the environment the
 result must work in (local, staging, production) and who must reach it there; ask if the request does
